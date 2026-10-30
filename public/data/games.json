@@ -1,0 +1,113 @@
+[
+  {
+    "id": "salto-guisante",
+    "title": "Salto Guisante",
+    "genre": "Plataformas",
+    "price": 12.9,
+    "color": "#7BD389",
+    "featured": true,
+    "developer": "Huerto Games",
+    "released": "2026",
+    "rating": 4.8,
+    "tagline": "Un guisante, mil ladrillos y nada de suelo.",
+    "description": "Eres un guisante con demasiada energía. Rebota de ladrillo en ladrillo y sube todo lo que puedas: unos se mueven, otros se rompen en cuanto los pisas. Si caes, vuelves a empezar desde abajo. Inspirado en los clásicos de salto infinito.",
+    "controls": ["Flechas ← → o A / D para moverte", "En el celular, mantén presionado el lado izquierdo o derecho de la pantalla", "Si sales por un borde apareces por el otro"],
+    "tags": ["salto", "infinito", "casual", "pou"],
+    "scoreLabel": "Altura",
+    "scoreUnit": "m",
+    "reviews": [
+      { "user": "lucia.dev", "score": 5, "text": "Iba a jugar cinco minutos y se me fue la tarde. Los ladrillos que se rompen son crueles." },
+      { "user": "elmanco", "score": 5, "text": "Me recuerda a Pou pero sin tener que darle de comer a nadie." },
+      { "user": "rafa_77", "score": 4, "text": "En celular se controla bien. Ojalá tenga monedas más adelante." }
+    ]
+  },
+  {
+    "id": "entre-tubos",
+    "title": "Entre Tubos",
+    "genre": "Arcade",
+    "price": 7.5,
+    "color": "#FFD23F",
+    "featured": true,
+    "developer": "Pajarera Studio",
+    "released": "2026",
+    "rating": 4.5,
+    "tagline": "Aletea. Pasa. No toques nada.",
+    "description": "Un pájaro, una fila infinita de tubos y un solo botón. Cada aleteo te sube un poco; la gravedad hace el resto. Cada tubo que pasas suma un punto, y el hueco no se va a hacer más grande.",
+    "controls": ["Espacio, clic o toque para aletear", "Pasar entre dos tubos suma 1 punto", "Tocar un tubo o el suelo termina la partida"],
+    "tags": ["un botón", "reflejos", "flappy"],
+    "scoreLabel": "Tubos",
+    "scoreUnit": "",
+    "reviews": [
+      { "user": "camila.r", "score": 5, "text": "Odio este juego. Llevo 40 partidas seguidas." },
+      { "user": "joseph", "score": 4, "text": "Simple y justo: cuando pierdes sabes que fue tu culpa." },
+      { "user": "andre_pe", "score": 4, "text": "Mi récord es 31 y no pienso parar." }
+    ]
+  },
+  {
+    "id": "buscaminas",
+    "title": "Buscaminas",
+    "genre": "Lógica",
+    "price": 0,
+    "color": "#5CC8FF",
+    "featured": false,
+    "developer": "SteamLite",
+    "released": "2026",
+    "rating": 4.7,
+    "tagline": "Cada número dice la verdad. Escúchalos.",
+    "description": "El clásico de siempre con tres niveles de dificultad. El primer clic nunca es una mina. Despeja el tablero usando los números: cada uno indica cuántas minas hay a su alrededor.",
+    "controls": ["Clic para descubrir una casilla", "Clic derecho para poner o quitar una bandera", "En el celular, activa el modo bandera o mantén presionado"],
+    "tags": ["clásico", "gratis", "pensar", "minas"],
+    "scoreLabel": "Mejor tiempo en Fácil",
+    "scoreUnit": "s",
+    "lowerIsBetter": true,
+    "reviews": [
+      { "user": "profe.mario", "score": 5, "text": "Por fin uno que funciona bien en el celular con el modo bandera." },
+      { "user": "vale", "score": 5, "text": "Gratis y sin anuncios. No pido más." },
+      { "user": "diego.cl", "score": 4, "text": "El modo difícil es de verdad difícil." }
+    ]
+  },
+  {
+    "id": "serpiente",
+    "title": "Serpiente",
+    "genre": "Arcade",
+    "price": 5.9,
+    "color": "#FF6FA8",
+    "featured": true,
+    "developer": "Nokia Nostalgia",
+    "released": "2026",
+    "rating": 4.4,
+    "tagline": "Come, crece y no te muerdas la cola.",
+    "description": "La serpiente que vivía en los celulares de antes, ahora en tu navegador. Cada fruta te hace más larga y un poco más rápida. Choca contra la pared o contra ti misma y se acabó.",
+    "controls": ["Flechas o W A S D para girar", "En el celular, desliza el dedo hacia donde quieres ir", "P para pausar"],
+    "tags": ["retro", "clásico", "snake"],
+    "scoreLabel": "Frutas",
+    "scoreUnit": "",
+    "reviews": [
+      { "user": "mamá_de_luis", "score": 5, "text": "Igualita a la de mi 1100. Me emocioné." },
+      { "user": "kev", "score": 4, "text": "Acelera justo cuando te confías." },
+      { "user": "nadia", "score": 4, "text": "El control por deslizamiento funciona mejor de lo que esperaba." }
+    ]
+  },
+  {
+    "id": "2048",
+    "title": "2048",
+    "genre": "Lógica",
+    "price": 4.5,
+    "color": "#FF9248",
+    "featured": false,
+    "developer": "Doble o Nada",
+    "released": "2026",
+    "rating": 4.6,
+    "tagline": "Junta los números iguales hasta llegar a 2048.",
+    "description": "Desliza las fichas en cualquier dirección. Cuando dos fichas con el mismo número se tocan, se unen en una sola. Parece fácil hasta que el tablero se llena.",
+    "controls": ["Flechas o W A S D para deslizar", "En el celular, desliza el dedo sobre el tablero", "Dos fichas iguales se unen en una"],
+    "tags": ["números", "puzzle", "tranquilo"],
+    "scoreLabel": "Puntos",
+    "scoreUnit": "",
+    "reviews": [
+      { "user": "sebas.m", "score": 5, "text": "Lo juego en el bus todos los días." },
+      { "user": "ari", "score": 4, "text": "Llegué a 1024 y me quedé sin espacio. Revancha mañana." },
+      { "user": "tomas_q", "score": 5, "text": "Relajante hasta que deja de serlo." }
+    ]
+  }
+]
