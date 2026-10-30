@@ -20,6 +20,7 @@ export const KEYS = {
   cart: 'steamlite:cart',
   library: 'steamlite:library',
   scores: 'steamlite:scores',
+  trials: 'steamlite:trials',
 }
 
 export function getBest(id) {
@@ -36,4 +37,19 @@ export function saveBest(id, value, lowerIsBetter = false) {
     writeJSON(KEYS.scores, scores)
   }
   return better
+}
+
+/* ---------- Partidas de prueba ---------- */
+export const TRIAL_GAMES = 3
+
+export function trialsUsed(id) {
+  return readJSON(KEYS.trials, {})[id] ?? 0
+}
+
+/** Marca una partida de prueba como jugada y devuelve cuántas quedan. */
+export function spendTrial(id) {
+  const all = readJSON(KEYS.trials, {})
+  all[id] = Math.min(TRIAL_GAMES, (all[id] ?? 0) + 1)
+  writeJSON(KEYS.trials, all)
+  return TRIAL_GAMES - all[id]
 }

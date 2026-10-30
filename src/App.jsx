@@ -9,19 +9,26 @@ import Cart from './pages/Cart'
 import Library from './pages/Library'
 import Play from './pages/Play'
 import NotFound from './pages/NotFound'
+import ErrorBoundary from './components/ErrorBoundary'
 
 function ScrollToTop() {
   const { pathname } = useLocation()
-  useEffect(() => window.scrollTo(0, 0), [pathname])
+  useEffect(() => {
+    // Llaves obligatorias: en Chrome reciente scrollTo devuelve una Promise
+    // y React la confundiría con la función de limpieza.
+    window.scrollTo(0, 0)
+  }, [pathname])
   return null
 }
 
 export default function App() {
+  const { pathname } = useLocation()
   return (
     <>
       <ScrollToTop />
       <Navbar />
       <main id="contenido">
+        <ErrorBoundary resetKey={pathname}>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/game/:id" element={<GameDetail />} />
@@ -30,6 +37,7 @@ export default function App() {
           <Route path="/play/:id" element={<Play />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
+        </ErrorBoundary>
       </main>
       <Footer />
       <Toast />

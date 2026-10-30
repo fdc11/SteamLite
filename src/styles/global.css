@@ -685,6 +685,21 @@ ul { padding: 0; list-style: none; }
 .overlay__text { color: var(--paper); line-height: 1.45; margin-bottom: 6px; }
 .overlay__text strong { color: var(--g); }
 
+/* Versión de prueba */
+.trial {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 20px;
+  border: 2px dashed var(--g); border-radius: 12px; padding: 12px 12px 12px 18px; margin-bottom: 24px;
+}
+.trial strong { color: var(--g); }
+.stage { position: relative; display: flex; justify-content: center; width: 100%; }
+.trial-over {
+  position: absolute; inset: -8px; z-index: 20; display: grid; place-items: center; padding: 20px;
+  background: rgba(26, 22, 54, 0.92); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+  border-radius: 16px; animation: fade-in 0.3s var(--ease);
+}
+.trial-over__card { display: grid; justify-items: center; gap: 16px; text-align: center; max-width: 380px; }
+.trial-over__card p:not(.overlay__title) { color: var(--muted); }
+
 /* ---------- Buscaminas ---------- */
 .mines { --cell: min(38px, calc((100vw - 2 * var(--gutter) - 12px) / var(--cols))); display: grid; justify-items: center; gap: 18px; }
 .mines__bar { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 14px 24px; }

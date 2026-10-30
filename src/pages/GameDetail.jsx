@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { useGame, useGames } from '../hooks/useGames'
 import { Poster, Shot } from '../components/GameArt'
-import BuyButton, { OwnershipBadge } from '../components/BuyButton'
+import BuyButton, { OwnershipBadge, TryLink } from '../components/BuyButton'
 import GameCard from '../components/GameCard'
 import Stars from '../components/Stars'
 import { Loading, ErrorBox, NotFoundBox } from '../components/States'
@@ -18,7 +18,9 @@ export default function GameDetail() {
   const [tab, setTab] = useState(TABS[0])
   const [shot, setShot] = useState(null)
 
-  useEffect(() => setTab(TABS[0]), [id])
+  useEffect(() => {
+    setTab(TABS[0])
+  }, [id])
 
   useEffect(() => {
     if (shot == null) return
@@ -62,6 +64,7 @@ export default function GameDetail() {
             <div className="detail__buy">
               <p className="detail__price">{formatPrice(game.price)}</p>
               <BuyButton game={game} size="lg" />
+              <TryLink game={game} />
               <OwnershipBadge game={game} />
             </div>
           </div>

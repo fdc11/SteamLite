@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Poster } from './GameArt'
-import BuyButton from './BuyButton'
+import BuyButton, { TryLink } from './BuyButton'
 import { formatPrice } from '../utils/format'
 
 const INTERVAL = 7000
@@ -38,6 +38,7 @@ export default function HeroCarousel({ games }) {
           <p className="hero__tagline">{game.tagline}</p>
           <div className="hero__actions">
             <BuyButton game={game} size="lg" />
+            <TryLink game={game} />
             <Link to={`/game/${game.id}`} className="link-underline">Ver detalles</Link>
           </div>
         </div>

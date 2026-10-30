@@ -92,7 +92,7 @@ export default function Cart() {
             const bought = items
             checkout()
             setReceipt({ email, last4, total: formatPrice(total), games: bought })
-            window.scrollTo({ top: 0, behavior: 'smooth' })
+            window.scrollTo({ top: 0, behavior: 'smooth' })?.catch?.(() => {})
           }}
         />
       </div>

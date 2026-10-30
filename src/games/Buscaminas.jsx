@@ -52,7 +52,7 @@ function flood(board, start, rows, cols) {
   return next
 }
 
-export default function Buscaminas({ onFinish, onStart }) {
+export default function Buscaminas({ onFinish, onEnd, onStart }) {
   const [level, setLevel] = useState('facil')
   const cfg = LEVELS[level]
   const [board, setBoard] = useState(() => emptyBoard(cfg.rows, cfg.cols))
@@ -90,7 +90,9 @@ export default function Buscaminas({ onFinish, onStart }) {
     const isNew = saveBest(`buscaminas:${level}`, secs, true)
     if (isNew) setBests((bs) => ({ ...bs, [level]: secs }))
     // El récord general de la biblioteca es el del nivel Fácil.
-    const general = level === 'facil' ? onFinish(secs) : false
+    let general = false
+    if (level === 'facil') general = onFinish(secs)
+    else onEnd?.()
     setRecord(isNew || general)
     setBoard(b.map((c) => (c.mine ? { ...c, flag: true } : c)))
   }
@@ -132,6 +134,7 @@ export default function Buscaminas({ onFinish, onStart }) {
   }
 
   const lose = (b, i) => {
+    onEnd?.()
     setBoom(i)
     setStatus('lost')
     setBoard(b.map((c) => (c.mine ? { ...c, open: true } : c)))

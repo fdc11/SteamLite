@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { useStore } from '../context/StoreContext'
 import { formatPrice } from '../utils/format'
+import { TRIAL_GAMES, trialsUsed } from '../utils/storage'
 
 /**
  * Botón de acción principal de un juego. Cambia según el estado:
@@ -43,4 +44,17 @@ export function OwnershipBadge({ game }) {
   if (owns(game.id)) return <span className="badge badge--owned">En tu biblioteca</span>
   if (inCart(game.id)) return <span className="badge">En el carrito</span>
   return null
+}
+
+/** Enlace a la versión de prueba (3 partidas) para juegos que aún no tienes. */
+export function TryLink({ game, className = 'link-underline' }) {
+  const { owns } = useStore()
+  if (owns(game.id) || game.price === 0) return null
+  const left = TRIAL_GAMES - trialsUsed(game.id)
+  if (left <= 0) return null
+  return (
+    <Link to={`/play/${game.id}`} className={className}>
+      Probar gratis ({left} {left === 1 ? 'partida' : 'partidas'})
+    </Link>
+  )
 }

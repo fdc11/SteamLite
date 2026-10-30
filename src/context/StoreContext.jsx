@@ -10,8 +10,12 @@ export function StoreProvider({ children }) {
   const [toast, setToast] = useState(null)
   const toastTimer = useRef()
 
-  useEffect(() => writeJSON(KEYS.cart, cart), [cart])
-  useEffect(() => writeJSON(KEYS.library, library), [library])
+  useEffect(() => {
+    writeJSON(KEYS.cart, cart)
+  }, [cart])
+  useEffect(() => {
+    writeJSON(KEYS.library, library)
+  }, [library])
 
   // Sincroniza si el usuario tiene la tienda abierta en otra pestaña.
   useEffect(() => {
