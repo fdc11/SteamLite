@@ -4,6 +4,7 @@ import { useStore } from '../context/StoreContext'
 import { useGames } from '../hooks/useGames'
 import { Poster } from '../components/GameArt'
 import CheckoutForm from '../components/CheckoutForm'
+import Confetti from '../components/Confetti'
 import { Loading } from '../components/States'
 import { formatPrice } from '../utils/format'
 
@@ -24,6 +25,7 @@ export default function Cart() {
   if (receipt) {
     return (
       <div className="wrap page success">
+        <Confetti fire={receipt.total} />
         <p className="success__mark" aria-hidden="true">✓</p>
         <h1 className="display-1">Listo, ya son tuyos.</h1>
         <p className="lead">

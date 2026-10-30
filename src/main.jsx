@@ -4,6 +4,7 @@ import { BrowserRouter } from 'react-router-dom'
 import App from './App'
 import { StoreProvider } from './context/StoreContext'
 import '@fontsource-variable/bricolage-grotesque/standard.css'
+import '@fontsource/silkscreen/400.css'
 import './styles/global.css'
 
 ReactDOM.createRoot(document.getElementById('root')).render(

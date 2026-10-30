@@ -4,6 +4,7 @@ import { useGame } from '../hooks/useGames'
 import { useStore } from '../context/StoreContext'
 import BuyButton from '../components/BuyButton'
 import { Poster } from '../components/GameArt'
+import Confetti from '../components/Confetti'
 import { Loading, ErrorBox, NotFoundBox } from '../components/States'
 import { TRIAL_GAMES, getBest, saveBest, spendTrial, trialsUsed } from '../utils/storage'
 
@@ -14,6 +15,12 @@ const ENGINES = {
   buscaminas: lazy(() => import('../games/Buscaminas')),
   serpiente: lazy(() => import('../games/Serpiente')),
   2048: lazy(() => import('../games/Game2048')),
+  'corre-llama': lazy(() => import('../games/CorreLlama')),
+  rompeladrillos: lazy(() => import('../games/Rompeladrillos')),
+  galaxia: lazy(() => import('../games/Galaxia')),
+  bloques: lazy(() => import('../games/Bloques')),
+  memoria: lazy(() => import('../games/Memoria')),
+  'palabra-secreta': lazy(() => import('../games/PalabraSecreta')),
 }
 
 export default function Play() {
@@ -60,6 +67,7 @@ function PlayScreen({ id }) {
 
   return (
     <div className="play" style={{ '--g': game.color }}>
+      <Confetti fire={record} />
       <div className="wrap play__bar">
         <Link to={owned ? '/library' : `/game/${game.id}`} className="back">{owned ? 'Biblioteca' : 'Ficha del juego'}</Link>
         <h1 className="play__title">{game.title}</h1>

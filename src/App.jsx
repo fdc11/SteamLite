@@ -10,6 +10,8 @@ import Library from './pages/Library'
 import Play from './pages/Play'
 import NotFound from './pages/NotFound'
 import ErrorBoundary from './components/ErrorBoundary'
+import InsertCoin from './components/InsertCoin'
+import { useGames } from './hooks/useGames'
 
 function ScrollToTop() {
   const { pathname } = useLocation()
@@ -23,8 +25,10 @@ function ScrollToTop() {
 
 export default function App() {
   const { pathname } = useLocation()
+  const { loading } = useGames()
   return (
     <>
+      <InsertCoin ready={!loading} />
       <ScrollToTop />
       <Navbar />
       <main id="contenido">

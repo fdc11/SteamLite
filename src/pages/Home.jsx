@@ -4,6 +4,8 @@ import HeroCarousel from '../components/HeroCarousel'
 import FilterBar from '../components/FilterBar'
 import GameCard from '../components/GameCard'
 import { Loading, ErrorBox } from '../components/States'
+import Marquee from '../components/Marquee'
+import { Mascot } from '../components/Logo'
 
 const normalize = (s) => s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
 
@@ -11,7 +13,11 @@ const GENRE_COPY = {
   Plataformas: 'Saltar, caer, volver a saltar. Reflejos y algo de suerte.',
   Arcade: 'Partidas de un minuto que se convierten en una hora.',
   Lógica: 'Sin prisa. Piensa antes de mover.',
+  Casual: 'Para jugar en familia, en el bus o en la fila del banco.',
 }
+
+// Cada categoría tiene su color de bloque.
+const GENRE_COLORS = { Plataformas: '#7BD389', Arcade: '#FF6FA8', Lógica: '#5CC8FF', Casual: '#FFD23F' }
 
 const sorters = {
   relevance: (a, b) => Number(b.featured) - Number(a.featured) || b.rating - a.rating,
@@ -51,12 +57,16 @@ export default function Home() {
   return (
     <>
       <HeroCarousel games={featured} />
+      <Marquee items={games.map((g) => ({ label: g.title, color: g.color }))} tone="paper" />
 
       <section className="wrap store" aria-labelledby="store-title">
         <div className="store__head">
-          <h2 id="store-title" className="display-2">La tienda</h2>
+          <h2 id="store-title" className="display-2">
+            La tienda
+            <Mascot size={64} className="store__mascot" />
+          </h2>
           <p className="store__lead">
-            Cinco juegos que caben en un descanso y duran semanas. Compra una vez y quedan en tu biblioteca para siempre (o hasta que borres el navegador).
+            {games.length} juegos que caben en un descanso y duran semanas. Pruébalos gratis, cómpralos una vez y quedan en tu biblioteca.
           </p>
         </div>
 
@@ -82,10 +92,9 @@ export default function Home() {
         ) : (
           groups.map(([name, list]) => (
             <section key={name} className="shelf" aria-label={name}>
-              <div className="shelf__side" style={{ '--g': list[0].color }}>
-                <h3 className="shelf__title">
-                  {name} <span>{list.length}</span>
-                </h3>
+              <div className="shelf__side" style={{ '--sc': GENRE_COLORS[name] ?? list[0].color }}>
+                <span className="shelf__count pixel">{list.length === 1 ? '1 juego' : `${list.length} juegos`}</span>
+                <h3 className="shelf__title">{name}</h3>
                 {GENRE_COPY[name] && <p className="shelf__desc">{GENRE_COPY[name]}</p>}
               </div>
               <div className="grid">

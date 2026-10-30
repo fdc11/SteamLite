@@ -247,7 +247,250 @@ function NumerosScene({ w, h, bg, fg, seed }) {
   )
 }
 
+/* ---------- Juegos nuevos ---------- */
+
+function LlamaFigure({ x, y, s = 1, body, eye, animate }) {
+  return (
+    <g transform={`translate(${x} ${y}) scale(${s})`}>
+      <g className={animate ? 'llama-hop' : undefined}>
+        {[8, 18, 32, 42].map((lx, i) => (
+          <rect key={lx} x={lx} y={36} width={7} height={22} rx={3} fill={body} transform={`rotate(${i % 2 ? 14 : -14} ${lx + 3} 36)`} />
+        ))}
+        <ellipse cx={26} cy={32} rx={28} ry={16} fill={body} />
+        <rect x={40} y={-2} width={13} height={36} rx={6} fill={body} />
+        <ellipse cx={54} cy={0} rx={13} ry={8} fill={body} />
+        <path d="M42 -4 L45 -16 L49 -4z" fill={body} />
+        <circle cx={45} cy={-16} r={3.5} fill="#FF6FA8" />
+        <circle cx={57} cy={-2} r={2.4} fill={eye} />
+        {['#FF6FA8', '#FFD23F', '#5CC8FF', '#7BD389'].map((c, i) => (
+          <rect key={c} x={12 + i * 7} y={20} width={7} height={13} fill={c} />
+        ))}
+      </g>
+    </g>
+  )
+}
+
+function Cactus({ x, ground, h, fill }) {
+  return (
+    <g fill={fill}>
+      <rect x={x} y={ground - h} width={16} height={h} rx={8} />
+      <rect x={x - 10} y={ground - h * 0.7} width={10} height={7} rx={3} />
+      <rect x={x - 10} y={ground - h * 0.92} width={7} height={h * 0.28} rx={3.5} />
+      <rect x={x + 16} y={ground - h * 0.5} width={10} height={7} rx={3} />
+      <rect x={x + 19} y={ground - h * 0.75} width={7} height={h * 0.3} rx={3.5} />
+    </g>
+  )
+}
+
+function LlamaScene({ w, h, bg, fg, seed, animate }) {
+  const r = rng(seed)
+  const ground = h * 0.8
+  const dark = bg === INK
+  const peaks = Array.from({ length: 6 }, (_, i) => ({ x: i * (w / 4) - r() * 40, ph: h * (0.28 + r() * 0.2) }))
+  return (
+    <>
+      <rect width={w} height={h} fill={bg} />
+      <circle cx={w * 0.78} cy={h * 0.22} r={Math.min(w, h) * 0.09} fill={fg} opacity={dark ? 1 : 0.9} />
+      {peaks.map((p, i) => (
+        <g key={i}>
+          <path d={`M${p.x - w * 0.22} ${ground} L${p.x} ${ground - p.ph} L${p.x + w * 0.22} ${ground}z`} fill={fg} opacity={dark ? 0.16 : 0.14} />
+          <path d={`M${p.x - 18} ${ground - p.ph + 26} L${p.x} ${ground - p.ph} L${p.x + 18} ${ground - p.ph + 26} L${p.x + 6} ${ground - p.ph + 20} L${p.x - 4} ${ground - p.ph + 28}z`} fill={dark ? PAPER : '#FFFFFF'} opacity="0.8" />
+        </g>
+      ))}
+      <rect x={0} y={ground} width={w} height={h - ground} fill={fg} opacity={dark ? 0.12 : 0.1} />
+      <rect x={0} y={ground} width={w} height={4} fill={fg} />
+      <Cactus x={w * 0.62} ground={ground} h={h * 0.13} fill={dark ? '#7BD389' : INK} />
+      <Cactus x={w * 0.86} ground={ground} h={h * 0.09} fill={dark ? '#7BD389' : INK} />
+      <path d={`M${w * 0.12} ${ground - 6} Q ${w * 0.3} ${ground - h * 0.42} ${w * 0.5} ${ground - h * 0.1}`} stroke={fg} strokeWidth="3" strokeDasharray="2 9" strokeLinecap="round" fill="none" />
+      <LlamaFigure x={w * 0.22} y={ground - h * 0.38} s={Math.min(w, h) / 230} body={dark ? fg : INK} eye={dark ? INK : bg} animate={animate} />
+    </>
+  )
+}
+
+function BreakoutScene({ w, h, bg, fg, seed }) {
+  const r = rng(seed)
+  const dark = bg === INK
+  const cols = 7
+  const rows = 6
+  const gap = 8
+  const bw = (w - 40 - gap * (cols - 1)) / cols
+  const bh = h * 0.045
+  const colors = ['#FF5D5D', '#FF9248', '#FFD23F', '#7BD389', '#5CC8FF', '#A78BFA']
+  const py = h * 0.86
+  const px = w * 0.38
+  return (
+    <>
+      <rect width={w} height={h} fill={bg} />
+      {Array.from({ length: rows * cols }, (_, k) => {
+        const c = k % cols
+        const rr = Math.floor(k / cols)
+        if (r() < 0.22 + rr * 0.04) return null
+        return <rect key={k} x={20 + c * (bw + gap)} y={h * 0.12 + rr * (bh + gap)} width={bw} height={bh} rx={4} fill={dark ? colors[rr] : rr % 2 ? INK : PAPER} />
+      })}
+      <path d={`M${px + w * 0.11} ${py - 8} L${w * 0.66} ${h * 0.5} L${w * 0.82} ${h * 0.62}`} stroke={fg} strokeWidth="3" strokeDasharray="2 10" strokeLinecap="round" fill="none" />
+      <circle cx={w * 0.82} cy={h * 0.62} r={Math.min(w, h) * 0.025} fill={dark ? PAPER : INK} />
+      <rect x={px} y={py} width={w * 0.22} height={h * 0.028} rx={6} fill={fg} />
+    </>
+  )
+}
+
+const ALIEN = ['...XXXXX...', '.XXXXXXXXX.', 'XX..XXX..XX', 'XXXXXXXXXXX', '.XXX...XXX.', '..XX.X.XX..', '.X..X.X..X.', 'X.........X']
+const ALIEN2 = ['.X.......X.', '..X.....X..', '..XXXXXXX..', '.XX.XXX.XX.', '.XXXXXXXXX.', '...XXXXX...', '..X.X.X.X..', '.X.......X.']
+
+function Pixels({ map, x, y, px, fill }) {
+  const cells = []
+  map.forEach((row, j) => [...row].forEach((ch, i) => ch === 'X' && cells.push(<rect key={`${i}-${j}`} x={x + i * px} y={y + j * px} width={px} height={px} />)))
+  return <g fill={fill}>{cells}</g>
+}
+
+function GalaxiaScene({ w, h, bg, fg, seed }) {
+  const r = rng(seed)
+  const dark = bg === INK
+  const px = Math.round(Math.min(w, h) / 85)
+  const sx = w * (0.35 + r() * 0.3)
+  return (
+    <>
+      <rect width={w} height={h} fill={dark ? '#100D24' : bg} />
+      {Array.from({ length: 40 }, (_, i) => (
+        <rect key={i} x={r() * w} y={r() * h} width={1 + r() * 2} height={1 + r() * 2} fill={dark ? PAPER : INK} opacity={0.5} />
+      ))}
+      {Array.from({ length: 12 }, (_, k) => {
+        const c = k % 4
+        const row = Math.floor(k / 4)
+        if (r() < 0.15) return null
+        return <Pixels key={k} map={row === 0 ? ALIEN2 : ALIEN} x={w * 0.14 + c * w * 0.2} y={h * 0.1 + row * px * 12} px={px} fill={dark ? '#EADBB8' : INK} />
+      })}
+      <rect x={sx - 2} y={h * 0.45} width={4} height={h * 0.06} fill={fg} />
+      <rect x={sx - 2} y={h * 0.6} width={4} height={h * 0.06} fill={fg} />
+      <g transform={`translate(${sx} ${h * 0.84}) scale(${Math.min(w, h) / 140})`} fill={fg}>
+        <path d="M0 -20 L8 -6 L18 8 L18 14 L-18 14 L-18 8 L-8 -6z" />
+        <circle cy="-2" r="4" fill={dark ? INK : bg} />
+        <path d="M-6 14 L0 24 L6 14z" fill="#FF9248" />
+      </g>
+    </>
+  )
+}
+
+const PIECE_COLORS = ['#5CC8FF', '#FFD23F', '#A78BFA', '#7BD389', '#FF5D5D', '#4FE3D7', '#FF9248']
+
+function BloquesScene({ w, h, bg, fg, seed }) {
+  const r = rng(seed)
+  const dark = bg === INK
+  const cell = Math.round(Math.min(w / 12, h / 16))
+  const cols = 10
+  const rowsN = Math.floor(h / cell)
+  const ox = (w - cols * cell) / 2
+  const heights = Array.from({ length: cols }, () => 2 + Math.floor(r() * 5))
+  const gapCol = Math.floor(r() * cols)
+  const blocks = []
+  heights.forEach((hh, c) => {
+    for (let k = 0; k < hh; k++) {
+      if (c === gapCol && k < 3) continue
+      blocks.push({ c, row: rowsN - 1 - k, color: dark ? PIECE_COLORS[(c + k * 3) % 7] : (c + k) % 3 ? INK : PAPER })
+    }
+  })
+  const T = [[1, 0], [0, 1], [1, 1], [2, 1]].map(([dx, dy]) => ({ c: 4 + dx, row: 3 + dy }))
+  return (
+    <>
+      <rect width={w} height={h} fill={bg} />
+      <rect x={ox} y={0} width={cols * cell} height={h} fill={dark ? '#211C44' : fg} opacity={dark ? 1 : 0.08} />
+      {blocks.map((b, i) => (
+        <rect key={i} x={ox + b.c * cell + 2} y={b.row * cell + 2} width={cell - 4} height={cell - 4} rx={4} fill={b.color} />
+      ))}
+      {T.map((b, i) => (
+        <rect key={`t${i}`} x={ox + b.c * cell + 2} y={b.row * cell + 2} width={cell - 4} height={cell - 4} rx={4} fill={dark ? fg : INK} />
+      ))}
+      {T.map((b, i) => (
+        <rect key={`g${i}`} x={ox + b.c * cell + 4} y={(b.row + rowsN - 9) * cell + 4} width={cell - 8} height={cell - 8} rx={3} fill="none" stroke={dark ? fg : INK} strokeWidth="2" opacity="0.5" />
+      ))}
+    </>
+  )
+}
+
+const MEMO_COLORS = ['#7BD389', '#FFD23F', '#FF6FA8', '#5CC8FF', '#A78BFA', '#4FE3D7']
+
+function MemoriaScene({ w, h, bg, fg, seed }) {
+  const r = rng(seed)
+  const dark = bg === INK
+  const cols = 4
+  const rows = w > h ? 3 : 4
+  const gap = 12
+  const cw = Math.min((w - 60 - gap * (cols - 1)) / cols, ((h - 60 - gap * (rows - 1)) / rows) * 0.8)
+  const ch = cw * 1.25
+  const ox = (w - cols * cw - gap * (cols - 1)) / 2
+  const oy = (h - rows * ch - gap * (rows - 1)) / 2
+  return (
+    <>
+      <rect width={w} height={h} fill={bg} />
+      {Array.from({ length: cols * rows }, (_, k) => {
+        const x = ox + (k % cols) * (cw + gap)
+        const y = oy + Math.floor(k / cols) * (ch + gap)
+        const open = r() < 0.35
+        const color = MEMO_COLORS[Math.floor(r() * MEMO_COLORS.length)]
+        return (
+          <g key={k} transform={`rotate(${(r() - 0.5) * 6} ${x + cw / 2} ${y + ch / 2})`}>
+            <rect x={x} y={y} width={cw} height={ch} rx={8} fill={open ? color : dark ? fg : INK} />
+            {open ? (
+              <circle cx={x + cw / 2} cy={y + ch / 2} r={cw * 0.22} fill={INK} />
+            ) : (
+              <path d={`M${x + cw / 2} ${y + ch * 0.3} l${cw * 0.18} ${ch * 0.2} l-${cw * 0.18} ${ch * 0.2} l-${cw * 0.18} -${ch * 0.2}z`} fill={dark ? INK : bg} opacity="0.5" />
+            )}
+          </g>
+        )
+      })}
+    </>
+  )
+}
+
+function PalabraScene({ w, h, bg, fg, seed }) {
+  const r = rng(seed)
+  const dark = bg === INK
+  const words = [['P', 'L', 'A', 'Y', 'A'], ['L', 'L', 'A', 'V', 'E'], ['L', 'L', 'A', 'M', 'A']]
+  const states = [
+    ['a', 'p', 'c', 'a', 'p'],
+    ['c', 'c', 'c', 'a', 'a'],
+    ['c', 'c', 'c', 'c', 'c'],
+  ]
+  const fills = { c: '#7BD389', p: '#FFD23F', a: dark ? '#3D3670' : INK }
+  const rows = w > h ? 3 : 5
+  const size = Math.min((w - 80) / 5.6, (h - 60) / (rows + 0.8))
+  const gap = size * 0.14
+  const ox = (w - 5 * size - 4 * gap) / 2
+  const oy = (h - rows * size - (rows - 1) * gap) / 2
+  void r
+  return (
+    <>
+      <rect width={w} height={h} fill={bg} />
+      {Array.from({ length: rows }, (_, row) =>
+        Array.from({ length: 5 }, (_, i) => {
+          const x = ox + i * (size + gap)
+          const y = oy + row * (size + gap)
+          const word = words[row]
+          const st = states[row]
+          return (
+            <g key={`${row}-${i}`}>
+              <rect x={x} y={y} width={size} height={size} rx={size * 0.12} fill={word ? fills[st[i]] : 'none'} stroke={word ? 'none' : dark ? '#3D3670' : INK} strokeWidth="3" opacity={word ? 1 : 0.4} />
+              {word && (
+                <text x={x + size / 2} y={y + size * 0.7} textAnchor="middle" fontSize={size * 0.55} fontWeight="800" fontFamily="Bricolage Grotesque Variable, sans-serif" fill={st[i] === 'a' ? PAPER : INK}>
+                  {word[i]}
+                </text>
+              )}
+            </g>
+          )
+        }),
+      )}
+      {!dark && <circle cx={w - 40} cy={40} r={16} fill={fg} opacity="0.12" />}
+    </>
+  )
+}
+
 const SCENES = {
+  'corre-llama': LlamaScene,
+  rompeladrillos: BreakoutScene,
+  galaxia: GalaxiaScene,
+  bloques: BloquesScene,
+  memoria: MemoriaScene,
+  'palabra-secreta': PalabraScene,
   'salto-guisante': SaltoScene,
   'entre-tubos': TubosScene,
   buscaminas: MinasScene,

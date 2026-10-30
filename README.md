@@ -2,17 +2,30 @@
 
 Tienda de minijuegos web hecha con **Vite + React**. Explora el catálogo, añade juegos al carrito, simula el pago y juega desde tu biblioteca, todo en el navegador.
 
-## Juegos incluidos
+## Juegos incluidos (11)
 
 | Juego | Género | Precio | Controles |
 |---|---|---|---|
 | Salto Guisante | Plataformas | S/ 12.90 | ← → / tocar los lados |
+| Corre Llama | Plataformas | S/ 9.90 | Espacio / toque (mantener = salto alto) |
+| Galaxia | Arcade | S/ 11.90 | ← → / arrastrar; dispara sola |
 | Entre Tubos | Arcade | S/ 7.50 | Espacio / clic / toque |
 | Serpiente | Arcade | S/ 5.90 | Flechas, WASD / deslizar |
+| Rompeladrillos | Arcade | S/ 6.50 | Mouse, ← → / dedo |
 | Buscaminas | Lógica | Gratis | Clic, clic derecho / modo bandera |
 | 2048 | Lógica | S/ 4.50 | Flechas, WASD / deslizar |
+| Bloques | Lógica | S/ 8.90 | ← → ↑ ↓ Espacio / botones táctiles |
+| Palabra Secreta | Casual | S/ 3.90 | Teclado físico o en pantalla (con Ñ) |
+| Memoria | Casual | Gratis | Clic / toque |
 
-Los juegos de pago se pueden **probar gratis 3 partidas** antes de comprarlos (botón "Probar gratis" en la ficha y en el destacado). Al terminar la prueba aparece la opción de compra.
+Los juegos de pago se pueden **probar gratis 3 partidas** antes de comprarlos.
+
+### Detalles de la interfaz
+- Pantalla de carga "INSERT COIN" (solo la primera vez por sesión).
+- Menú flotante con indicador animado; menú de pantalla completa en celular.
+- Buscador rápido: presiona **/** (o Ctrl+K) en cualquier pantalla.
+- Tarjetas con inclinación 3D, confeti al comprar y al batir un récord.
+- Guisi, la mascota, sigue el cursor con la mirada.
 
 Para probar el pago usa la tarjeta `4242 4242 4242 4242`, cualquier fecha futura y cualquier CVV.
 
